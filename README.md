@@ -4,6 +4,23 @@
 注：这里只列出常用命令, 基本上能满足日常工作所需, 如果想要更系统的可能需要翻阅官方手册。
 ---
 
+# 目录
+- 文件管理
+  - [head](#head) | [tail](#tail) | [ls](#ls) | [pwd](#pwd) | [wc](#wc) | [find](#find) | [mkdir](#mkdir)
+  - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv)
+- 系统管理
+  - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which)
+- 系统设置
+  - [alias](#alias) | [time](#time) | [clear](#clear)
+- 网络
+  - [wget](#wget)
+- 磁盘
+  - [df](#df)
+- 鸡助命令
+  - [cal](#cal)
+- 其他
+  - [echo](#echo)
+
 ## head
 显示某个文件的前十行
 ```bash
@@ -303,4 +320,107 @@ rmdir temp
 
 # -p 参数可以删除多层空目录, 发现temp3是空目录删除掉，然后接着往父级找如果还是空目录继续删除...
 rmdir -p temp1/temp2/temp3
+```
+
+## watch
+通常用于监听1个命令的运行结果、定时执行命令
+
+```bash
+# 每5秒执行一次 tail 命令, 如果不指定-n 默认为2秒
+watch -n 5 "tail README.md"
+
+# -d 高亮显示变化内容
+watch -n 5 -d "tail README.md"
+```
+
+## ping
+测试目标地址是否可连接、延迟度
+
+```bash
+# 测试 github.com 连通性, 按 ctrl + C 停止 
+ping github.com
+
+# ping 5次后断开
+ping -c 5 xiejiahe.com
+
+# 每5秒ping 一次
+ping -i 5 xiejiahe.com
+```
+
+## cp
+拷贝文件或目录
+
+```bash
+# 将当前 README.md 文件拷贝到上一层
+cp ./README.md ../README.md
+
+# -a 将原文件属性一同拷贝
+cp -a ./README.md ../README.md
+
+# -r 拷贝目录
+cp -r home ../home
+
+# -i 如果目标文件存在会询问用户是否需要覆盖
+cp -i README.md README.md
+```
+
+## which
+查找某个命令存储在哪个位置, 输出绝对路径, `which` 会在环境变量 `$PATH` 设置的目录里去查找。
+
+注: 可以通过 `echo $PATH` 查看设置的目录. 
+
+```bash
+which top  # /usr/bin/top
+
+# 查找pwd发现会找不到，因为 pwd 是bash的内置命令
+which pwd
+```
+
+## cat
+查看指定文件内容
+
+```bash
+# 查看 README.md 文件所有内容
+cat README.md
+cat README.md README2.md  # 或者一次性显示多个文件
+
+# -n 指定显示行号
+cat -n README.md
+```
+
+## mv
+`mv` 有2个用途：
+- 将文件或目录移动到另一个位置
+- 将文件或目录重命名
+
+注：实际上 `mv` 是用来移动文件或目录，只不过有类似重命名的功能而已。
+```bash
+# 将 README.md 重命名为 README-2.md, 如果 README-2.md 存在会直接覆盖。
+mv README.md README-2.md
+
+# 将 README.md 移动到上一层目录
+mv README.md ../README.md
+
+# -i 交互式操作，如果目标文件存在则进行询问是否覆盖
+mv -i README.md ../README.md
+```
+
+
+
+## cal
+显示当前日历
+
+```bash
+cal
+# 输出
+     June 2020        
+Su Mo Tu We Th Fr Sa  
+    1  2  3  4  5  6  
+ 7  8  9 10 11 12 13  
+14 15 16 17 18 19 20  
+21 22 23 24 25 26 27  
+28 29 30
+
+# 显示临近3个月, 只能是3个月
+cal -3
 ```
