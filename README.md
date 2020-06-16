@@ -10,6 +10,7 @@
   - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
+  - [shutdown](#shutdown)
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
 - 网络
@@ -433,4 +434,22 @@ last # root     pts/0        Sun Jun 14 00:12   still logged in    192.0.0.0
 
 # 指定显示条目数
 last -n 1
+```
+
+## shutdown
+将系统关机或重启操作
+
+```bash
+# 立即重启系统
+shutdown -r now
+
+# 关机系统
+shutdown -h  关机
+
+# 把前一个关机或重启取消掉
+shutdown -c 
+
+# 设定一个时间关机, 加 & 可以继续用终端命令
+shutdown -h 05:33 &
+shutdown +5 "5分钟后关机" # 5分钟后关机，同时送出警告信息给登入用户：
 ```
