@@ -453,3 +453,20 @@ shutdown -c
 shutdown -h 05:33 &
 shutdown +5 "5分钟后关机" # 5分钟后关机，同时送出警告信息给登入用户：
 ```
+
+## reboot
+用于重新启动系统。
+
+```bash
+# 重启系统
+reboot
+
+# -f 强制重启
+reboot -f
+
+# 用于模拟重新启动系统，不会真实重启，数据会写入 /var/log/wtmp 
+reboot -w
+
+# 在重新启动之前关闭所有网络界面
+reboot -i
+```
