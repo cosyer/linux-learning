@@ -10,7 +10,7 @@
   - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
-  - [shutdown](#shutdown) | [reboot](#reboot) | [uname](#uname)
+  - [shutdown](#shutdown) | [reboot](#reboot) | [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) 
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
 - 网络
@@ -489,4 +489,46 @@ uname -n # Yin.local
 
 # 打印处理器名称
 uname -p # i386
+```
+
+## ifconfig
+配置或显示系统网卡的网络参数
+
+```bash
+# 显示所有网络参数信息
+ifconfig
+
+# 配置网卡IP地址
+ifconfig eth0 192.168.1.111
+```
+
+## who
+显示当前所有用户登录信息
+
+```bash
+# 显示当前登录系统的用户
+who
+cosyer console  Jun 15 21:38
+
+# 显示登录账号名和总人数
+who -q
+
+# 显示上次系统启动时间
+who -b  # reboot   ~        Jun 15 21:38
+```
+
+## whereis
+用来定位指令的二进制程序、源代码文件和man手册页等相关文件的路径。
+
+注意：whereis 是从数据库里查找的，因此特别快，默认情况下一星期更新一次数据，所以有时会查找删除的数据或者刚建立的数据无法找到问题。
+
+```bash
+# 查找 nginx
+whereis nginx # nginx: /usr/sbin/nginx /usr/lib64/nginx /etc/nginx /usr/share/nginx /usr/share/man/man8/nginx.8.gz /usr/share/man/man3/nginx.3pm.gz
+
+# -b 指定只查找二进制
+where -b nginx # nginx: /usr/sbin/nginx /usr/lib64/nginx /etc/nginx /usr/share/nginx
+
+# -m 指定查找说明文件 man
+whereis -m nginx # nginx: /usr/share/man/man8/nginx.8.gz /usr/share/man/man3/nginx.3pm.gz
 ```
