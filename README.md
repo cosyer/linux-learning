@@ -13,6 +13,8 @@
   - [shutdown](#shutdown) | [reboot](#reboot) | [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) 
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
+- 压缩、解压
+  - [zip](#zip)
 - 网络
   - [wget](#wget)
 - 磁盘
@@ -64,7 +66,6 @@ top -n 2
 # 显示指定的进程信息
 top -p 620
 ```
-
 
 ## ls
 显示目录列表
@@ -531,4 +532,21 @@ where -b nginx # nginx: /usr/sbin/nginx /usr/lib64/nginx /etc/nginx /usr/share/n
 
 # -m 指定查找说明文件 man
 whereis -m nginx # nginx: /usr/share/man/man8/nginx.8.gz /usr/share/man/man3/nginx.3pm.gz
+```
+
+## zip
+将目录或文件压缩为 .zip 格式
+
+```bash
+# 压缩文件
+zip README.zip README.md
+
+# 压缩目录需要 -r 递归处理
+zip -r temp.zip temp
+
+# 包含系统隐藏文件
+zip -r -S temp.zip temp
+
+# 指定压缩效率 1-9
+zip -r -9 temp.zip temp 
 ```
