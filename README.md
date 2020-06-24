@@ -14,7 +14,7 @@
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
 - 压缩、解压
-  - [zip](#zip)
+  - [zip](#zip) | [unzip](#unzip)
 - 网络
   - [wget](#wget)
 - 磁盘
@@ -549,4 +549,18 @@ zip -r -S temp.zip temp
 
 # 指定压缩效率 1-9
 zip -r -9 temp.zip temp 
+```
+
+## unzip
+解压 .zip
+
+```bash
+# 将 demo.zip 解压到当前目录
+unzip demo.zip
+
+# 查看 demo.zip 文件，但不解压
+unzip -v demo.zip
+
+# -d 指定将文件压缩到 src 目录下
+unzip demo.zip -d src
 ```
