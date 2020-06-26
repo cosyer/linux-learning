@@ -7,10 +7,10 @@
 # 目录
 - 文件管理
   - [head](#head) | [tail](#tail) | [ls](#ls) | [pwd](#pwd) | [wc](#wc) | [find](#find) | [mkdir](#mkdir)
-  - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv)
+  - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
-  - [shutdown](#shutdown) | [reboot](#reboot) | [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) 
+  - [shutdown](#shutdown) | [reboot](#reboot) | [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) 
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
 - 压缩、解压
@@ -563,4 +563,35 @@ unzip -v demo.zip
 
 # -d 指定将文件压缩到 src 目录下
 unzip demo.zip -d src
+```
+
+## locate
+搜索文件，与 `find` 命令很像，但更快，因为是从数据库里查找, 通常每天会进行数据更新。
+
+```bash
+# 搜索 README.md 相关文件
+locate README.md
+
+# 忽略大小写
+locate -i README.md
+```
+
+## kill
+杀死一个正在运行中的程序。注：程序进程id可通过 top 等命令查看。
+
+```bash
+# 杀死 pid 为88 进程
+kill 88
+
+# 强制杀死
+kill -KILL 88
+
+# 彻底杀死进程
+kill -9 88
+
+# 显示信号
+kill -l
+
+# 杀死指定用户的所有进程
+kill -u nginx
 ```
