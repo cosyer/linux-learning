@@ -10,7 +10,7 @@
   - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
-  - [shutdown](#shutdown) | [reboot](#reboot) | [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) 
+  - [shutdown](#shutdown) | [reboot](#reboot) | [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) | [chomod](#chomod) | [lsof](#lsof) 
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
 - 压缩、解压
@@ -594,4 +594,48 @@ kill -l
 
 # 杀死指定用户的所有进程
 kill -u nginx
+```
+
+## chmod
+修改文件或目录权限
+
+chmod [参数选项] [mode, 八进制或符号表示] files...
+- u 符号代表当前用户。
+- g 符号代表和当前用户在同一个组的用户，以下简称组用户。
+- o 符号代表其他用户。
+- a 符号代表所有用户。
+- r 符号代表读权限以及八进制数4。
+- w 符号代表写权限以及八进制数2。
+- x 符号代表执行权限以及八进制数1。
+- X 符号代表如果目标文件是可执行文件或目录，可给其设置可执行权限。
+- s 符号代表设置权限suid和sgid，使用权限组合u+s设定文件的用户的ID位，g+s设置组用户ID位。
+- t 符号代表只有目录或文件的所有者才可以删除目录下的文件。
+- \+ 符号代表添加目标用户相应的权限。
+- \- 符号代表删除目标用户相应的权限。
+- = 符号代表添加目标用户相应的权限，删除未提到的权限。
+
+```bash
+# README.md 文件设为所有用户可读取
+chmod a+r README.md
+
+# -R 递归目录下所有文件
+chmod a+r src/
+
+# 也可以用八进制符号表示
+# 3个数字分别为 x,y,z 表示User、Group、及Other的权限。
+# r=4, w=2, x=1
+chmod 777 README.md # 等价于 chmod a=rwx README.md
+```
+
+## lsof
+列出当前系统打开文件的工具
+```bash
+## 列表所有打开文件的的列表
+lsof
+
+# 查看指定端口被占用情况
+lsof -i:8080
+
+# -p 列出指定进程号所打开的文件
+lsof -p 6112
 ```
