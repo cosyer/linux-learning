@@ -10,7 +10,8 @@
   - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
-  - [shutdown](#shutdown) | [reboot](#reboot) | [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) | [chomod](#chomod) | [lsof](#lsof) 
+  - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps)
+  - [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) | [chomod](#chomod) | [lsof](#lsof) 
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
 - 压缩、解压
@@ -638,4 +639,24 @@ lsof -i:8080
 
 # -p 列出指定进程号所打开的文件
 lsof -p 6112
+```
+
+## ps
+查看当前系统进程状态
+
+```bash
+# 显示所有进程信息
+ps -A
+
+# 显示指定用户进程信息
+ps -u root
+
+# 显示所有进程信息包括命令行
+ps -ef  # -e 等价于 -A  , 即等价于 ps -Af
+
+# 列出所有正在内存中的进程
+ps aux
+
+# 配合 grep 查询指定进程
+ps -ef | grep nginx
 ```
