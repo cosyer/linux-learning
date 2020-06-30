@@ -151,7 +151,42 @@ wget -c https://mydearest.cn/robots.txt
 wget -c https://mydearest.cn/robots.txt
 tail -f wget-log   # 查看后台下载进度
 ```
+curl和wget基础功能有诸多重叠，如下载等。非要说区别的话，curl由于可自定义各种请求参数所以在模拟web请求方面更擅长；wget由于支持ftp和Recursive所以在下载文件方面更擅长。类比的话curl是浏览器，而wget是迅雷9。
 
+1.下载文件
+```bash
+curl -O http://man.linuxde.net/text.iso                    #O大写，不用O只是打印内容不会下载
+wget http://www.linuxde.net/text.iso                       #不用参数，直接下载文件
+``` 
+
+2.下载文件并重命名
+```bash
+curl -o rename.iso http://man.linuxde.net/text.iso         #o小写
+wget -O rename.zip http://www.linuxde.net/text.iso         #O大写
+```
+
+3.断点续传
+```bash
+curl -O -C - http://man.linuxde.net/text.iso               #O大写，C大写
+wget -c http://www.linuxde.net/text.iso                    #c小写
+```
+
+4.限速下载
+```bash
+curl --limit-rate 50k -O http://man.linuxde.net/text.iso
+wget --limit-rate=50k http://www.linuxde.net/text.iso
+```
+
+5.显示响应头部信息
+```bash
+curl -I http://man.linuxde.net/text.iso
+wget --server-response http://www.linuxde.net/test.iso
+```
+
+6.wget利器--打包下载网站
+```bash
+wget --mirror -p --convert-links -P /var/www/html http://man.linuxde.net/
+```
 
 ## df
 显示磁盘信息
