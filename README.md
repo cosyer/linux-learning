@@ -17,13 +17,13 @@
 - 压缩、解压
   - [zip](#zip) | [unzip](#unzip)
 - 网络
-  - [wget](#wget)
+  - [wget](#wget) | [curl](#curl)
 - 磁盘
   - [df](#df)
 - 鸡助命令
   - [cal](#cal)
 - 其他
-  - [echo](#echo)
+  - [echo](#echo) | [date](#date)
 
 ## head
 显示某个文件的前十行
@@ -151,7 +151,8 @@ wget -c https://mydearest.cn/robots.txt
 wget -c https://mydearest.cn/robots.txt
 tail -f wget-log   # 查看后台下载进度
 ```
-curl和wget基础功能有诸多重叠，如下载等。非要说区别的话，curl由于可自定义各种请求参数所以在模拟web请求方面更擅长；wget由于支持ftp和Recursive所以在下载文件方面更擅长。类比的话curl是浏览器，而wget是迅雷9。
+curl和wget基础功能有诸多重叠，如下载等。非要说区别的话，curl由于可自定义各种请求参数所以在模拟web请求方面更擅长；wget由于支持ftp和Recursive所以
+在下载文件方面更擅长。类比的话curl是浏览器，而wget是迅雷9。
 
 1.下载文件
 ```bash
@@ -321,7 +322,7 @@ echo Hello World > 1.txt
 ```bash
 # time 后面跟着要测试的命令
 # 输出:  0.02s user 0.01s system 0% cpu 6.233 total
-time curl https://github.com/xjh22222228/linux-manual
+time curl https://github.com/cosyer/linux-learning
 ```
 
 
@@ -714,4 +715,49 @@ open https://github.com/cosyer
 
 # 指定某个应用程序打开某个文件, 如果不指定文件默认直接打开程序
 open -a /Applications/Google/Chrome.app README.md
+```
+
+## curl
+`curl` 是一个非常强大的网络传输工具, 利用URL规则在命令行下工作的文件传输工具。
+
+```bash
+# 查看网页内容
+curl https://github.com/cosyer/linux-learning
+
+# 下载文件到本地
+curl https://github.com/cosyer/linux-learning -O
+curl https://github.com/cosyer/linux-learning -O --progress # 显示下载进度条
+
+# -I 或 -head 显示HTTP响应报文
+curl https://github.com/cosyer/linux-learning -I
+
+# -H 设置请求头
+curl -H 'Content-Type: application/json' -H 'Content-Type: application/json' https://github.com/cosyer/linux-learning
+
+# 通过POST请求发送JSON数据, -X 指明是否哪种HTTP请求, -d 实体内容
+curl -H "Content-type: application/json" -X POST -d '{"age":"18"}' https://github.com/cosyer/linux-learning
+
+# 发送时携带 cookie
+curl https://github.com/cosyer/linux-learning --cookie "age=18;name=xjh"
+
+# -v 查看整个传输过程
+curl https://github.com/cosyer/linux-learning -v
+
+# -F(--form) 利用POST上传文件, file 是字段名, =@ 必须存在
+curl https://example.com/upload -F "file=@/home/demo.png"
+```
+
+## date
+显示或设置系统时间日期
+
+```bash
+# 显示当前时间
+date
+
+# 格式化当前时间
+date +"%Y-%m-%d %H:%M.%S" # 2020-07-01 00:00.00
+
+# 设置系统时间
+date -s  # 设置当前时间, 须root
+date -s "2020-07-01 00:00:00" # 设置全部时间
 ```
