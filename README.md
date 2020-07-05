@@ -11,7 +11,7 @@
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
   - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps)
-  - [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) | [chomod](#chomod) | [lsof](#lsof) | [netstat](#netstat)
+  - [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) | [chomod](#chomod) | [lsof](#lsof) | [netstat](#netstat) | [w](#w) | [chown](#chown)
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
 - 压缩、解压
@@ -807,4 +807,23 @@ netstat -au
 
 # 配合grep命令查看某个端口被占用情况
 netstat -ap | grep 8080
+```
+
+## w
+查看当前登入系统的用户信息, 有哪些用户正在登陆, 以及它们正在执行的程序。
+
+此命令与 who 相似，默认情况下比 who 命令输出内容更详细。
+
+## chown
+用来变更文件或目录的拥有者或所属群组
+
+```bash
+# 将 README.md 文件拥有者设为 byroot
+chown byroot README.md
+
+# 使用-R递归处理文件
+chown -R byroot src/
+
+# 改变所属群组, 拥有者设为 byroot 群组设为 byrootgroup
+chown byroot:byrootgroup README.md
 ```
