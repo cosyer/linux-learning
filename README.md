@@ -10,7 +10,7 @@
   - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate) | [open](#open)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
-  - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps)
+  - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps) | [uptime](#uptime)
   - [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) | [chomod](#chomod) | [lsof](#lsof) | [netstat](#netstat) | [w](#w) | [chown](#chown)
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
@@ -827,3 +827,13 @@ chown -R byroot src/
 # 改变所属群组, 拥有者设为 byroot 群组设为 byrootgroup
 chown byroot:byrootgroup README.md
 ```
+
+## uptime
+查看系统负载信息
+```bash
+[root@node-1 ~]# uptime
+ 09:45:09 up 2 days, 20:25,  2 users,  load average: 0.22, 0.37, 0.40
+You have new mail in /var/spool/mail/root
+```
+
+[回目录](#目录)
