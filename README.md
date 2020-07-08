@@ -897,4 +897,18 @@ gzip -d README.md
 gzip -dr ./logs # 或者递归解压目录下的所有文件
 ```
 
+## bzip2
+将文件压缩成 bz2 格式，也可用于解压 .bz2
+
+```bash
+# 压缩 README.md 文件
+bzip2 README.md     # 不保留源文件 README.md.bz2
+bzip2 -k README.md  # -k 保留源文件
+
+# 解压
+bzip2 -d README.md.bz2  # 源文件将被删除
+bzip2 -dk README.md.bz2  # -k 保留源文件
+bzip -dt README.md.bz2 # -t --test 测试解压, 实际不解压，模拟整个解压过程
+```
+
 [回目录](#目录)
