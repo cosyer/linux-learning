@@ -875,4 +875,26 @@ chattr +i README.md  # chattr -i README.md  解锁
 lsattr README.md
 ```
 
+## gzip
+用来压缩文件, 也可以用来解压文件, 格式为 .gz, 压缩后原文件将被删除
+> 注意：gzip 不能用于压缩整个目录, 只能用于压缩文件, 如果需要压缩整个目录可以考虑使用 [zip](#zip) 命令。
+
+```bash
+# 压缩 README.md 文件, 压缩完成后 README.md 文件会被删除
+gzip README.md # README.md.gz
+
+# 递归压缩目录下的所有文件
+gzip -r ./logs
+
+# 加 -v 显示压缩执行过程
+gzip -rv ./logs
+
+# 压缩 .tar 后缀文件
+gzip -r src.tar  # 压缩后为 src.tar.gz
+
+# -d 解压之前gzip压缩后的文件
+gzip -d README.md
+gzip -dr ./logs # 或者递归解压目录下的所有文件
+```
+
 [回目录](#目录)
