@@ -10,7 +10,7 @@
   - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate) | [open](#open)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
-  - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps) | [uptime](#uptime)
+  - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps) | [uptime](#uptime) | [crontab](#crontab)
   - [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) | [chomod](#chomod) | [lsof](#lsof) | [netstat](#netstat) | [w](#w) | [chown](#chown)
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
@@ -929,6 +929,40 @@ more +10 README.md
 
 # 显示查看进度
 more -d README.md # --More--(17%)[Press space to continue, 'q' to quit.]
+```
+
+## crontab
+周期性执行任务, 通常用于定时备份
+* * * * * 分别含义：
+```bash
+*    *    *    *    *
+┬    ┬    ┬    ┬    ┬
+│    │    │    │    │
+│    │    │    │    │
+│    │    │    │    └───── 一周中的某一天 (0 - 7)  0或7代表是星期日
+│    │    │    └────────── 月份 (1 - 12)
+│    │    └─────────────── 一个月的某一天 (1 - 31)
+│    └──────────────────── 小时 (0 - 23)
+└───────────────────────── 分钟 (0 - 59)
+```
+
+```bash
+# 列出该用户设置
+crontab -l
+
+# 编辑该用户设置
+crontab -e
+
+# 删除该用户设置
+crontab -r
+```
+
+```bash
+# 每天18点18分执行 echo `date` > README.md
+18 18 * * * echo `date` > README.md
+
+# 每一分钟执行
+* * * * */1 echo `date` > README.md
 ```
 
 [回目录](#目录)
