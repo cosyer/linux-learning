@@ -23,7 +23,7 @@
 - 鸡助命令
   - [cal](#cal)
 - 其他
-  - [echo](#echo) | [date](#date) | [man](#man)
+  - [echo](#echo) | [date](#date) | [man](#man) | [sleep](#sleep)
 
 ## head
 显示某个文件的前十行
@@ -974,6 +974,19 @@ man ls
 
 # -a 在所有手册中查找
 man -a ls
+```
+
+### sleep
+将目前动作延迟一段时间, 通常用于脚本当中
+时间参数：
+- s 秒
+- m 分钟
+- h 小时
+- d 天
+
+```bash
+# 5秒后输出 Hello
+sleep 5s; echo Hello
 ```
 
 [回目录](#目录)
