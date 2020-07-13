@@ -23,7 +23,7 @@
 - 鸡助命令
   - [cal](#cal)
 - 其他
-  - [echo](#echo) | [date](#date)
+  - [echo](#echo) | [date](#date) | [man](#man)
 
 ## head
 显示某个文件的前十行
@@ -963,6 +963,17 @@ crontab -r
 
 # 每一分钟执行
 * * * * */1 echo `date` > README.md
+```
+
+### man
+查看指令帮助手册
+
+```bash
+# 查看 ls 指令帮助手册
+man ls
+
+# -a 在所有手册中查找
+man -a ls
 ```
 
 [回目录](#目录)
