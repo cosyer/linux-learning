@@ -6,8 +6,8 @@
 
 # 目录
 - 文件管理
-  - [head](#head) | [tail](#tail) | [ls](#ls) | [pwd](#pwd) | [wc](#wc) | [find](#find) | [mkdir](#mkdir) | [chattr](#chattr) | [more](#more)
-  - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate) | [open](#open)
+  - [head](#head) | [tail](#tail) | [ls](#ls) | [pwd](#pwd) | [wc](#wc) | [find](#find) | [mkdir](#mkdir) | [chattr](#chattr) | [more](#more) | [paste](#paste)
+  - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate) | [open](#open) | [source](#source)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
   - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps) | [uptime](#uptime) | [crontab](#crontab)
@@ -987,6 +987,24 @@ man -a ls
 ```bash
 # 5秒后输出 Hello
 sleep 5s; echo Hello
+```
+
+### source
+在当前Shell环境中从指定文件读取和执行命令， 通常用于重新执行环境(别名 . 点符号)
+
+```bash
+source ~/.bash_profile  # 等价 . ~/.bash_profile
+```
+
+### paste
+合并N个文件的列，相当于追加文件内容
+
+```bash
+# 1.txt 和 2.txt 合并输出
+paste 1.txt 2.txt
+
+# 1.txt 2.txt 合并后保存为 3.txt
+paste 1.txt 2.txt > 3.txt
 ```
 
 [回目录](#目录)
