@@ -6,8 +6,8 @@
 
 # 目录
 - 文件管理
-  - [head](#head) | [tail](#tail) | [ls](#ls) | [pwd](#pwd) | [wc](#wc) | [find](#find) | [mkdir](#mkdir) | [chattr](#chattr) | [more](#more) | [paste](#paste)
-  - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate) | [open](#open) | [source](#source)
+  - [head](#head) | [tail](#tail) | [ls](#ls) | [pwd](#pwd) | [wc](#wc) | [find](#find) | [mkdir](#mkdir) | [chattr](#chattr) | [more](#more) | [paste](#paste) | [stat](#stat)
+  - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate) | [open](#open) | [source](#source) | [tree](#tree)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
   - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps) | [uptime](#uptime) | [crontab](#crontab)
@@ -23,7 +23,7 @@
 - 鸡助命令
   - [cal](#cal)
 - 其他
-  - [echo](#echo) | [date](#date) | [man](#man) | [sleep](#sleep)
+  - [echo](#echo) | [date](#date) | [man](#man) | [sleep](#sleep) | [yum](#yum) | [history](#history)
 
 ## head
 显示某个文件的前十行
@@ -1005,6 +1005,94 @@ paste 1.txt 2.txt
 
 # 1.txt 2.txt 合并后保存为 3.txt
 paste 1.txt 2.txt > 3.txt
+```
+
+### stat
+用于显示文件或目录的状态信息
+
+```bash
+stat logs
+# File: ‘logs/’
+# Size: 16384           Blocks: 32         IO Block: 4096   directory
+# Device: fd01h/64769d    Inode: 669067      Links: 5
+# Access: (0755/drwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+# Access: 2020-07-07 17:24:23.941816812 +0800
+# Modify: 2020-07-12 11:46:55.567707577 +0800
+# Change: 2020-07-12 11:46:55.567707577 +0800
+# Birth: -
+```
+
+### tree
+生成目录树结构, 通常用于描述项目结构
+
+```bash
+# 递归当前目录下所有文件并生成目录树
+tree
+# .
+# ├── LICENSE
+# ├── README.md
+# ├── b.md
+# └── media
+#     └── poster.jpg
+
+
+# -I 忽略某些目录
+tree -I "node_modules|.git|.svn"
+
+# 只显示目录
+tree -d
+
+# 指定要递归的目录层级
+tree -L 3
+```
+
+### yum
+基于RPM的软件包管理器, 特点安装快捷，命令简洁好记
+
+```bash
+# 安装nginx
+yum install nginx
+
+# 指定 -y 安装时自动全部 yes
+yum -y install nginx
+
+# 查找包
+yum search nginx
+
+# 显示所有已安装的包
+yum list
+
+# 升级包
+yum -y update nginx
+
+# 移除包
+yum -y remove nginx
+
+# 清除缓存
+yum clean all
+
+# 显示安装包信息
+yum info nginx
+
+# 检查可更新的包程序
+yum check-update
+```
+
+### history
+列出当前系统使用过的命令，默认保存1000条
+
+```bash
+# 列出当前使用过的命令,
+history
+
+# 指定要显示的条数
+history 50
+
+# 清空历史命令
+history -c
+
+# 过滤
+history | grep java
 ```
 
 [回目录](#目录)
