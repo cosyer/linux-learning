@@ -10,7 +10,7 @@
   - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate) | [open](#open) | [source](#source) | [tree](#tree) | [md5sum](#md5sum)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
-  - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps) | [uptime](#uptime) | [crontab](#crontab)
+  - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps) | [uptime](#uptime) | [crontab](#crontab) | [su](#su)
   - [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) | [chomod](#chomod) | [lsof](#lsof) | [netstat](#netstat) | [w](#w) | [chown](#chown)
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
@@ -1105,6 +1105,23 @@ mmd5sum README.md # d41d8cd98f00b204e9800998ecf8427e  README.md
 # 校验文件, 查看文件是否被篡改过
 md5sum README.md > README.md5 # 计算文件md5并保存在 README.md5 , 保存的文件名和后缀可以随意命名
 md5sum -c README.md5 # -c 从指定的文件读取md5并校验, 会从当前目录寻找 README.md
+```
+
+### su
+切换当前用户到其他用户
+
+```bash
+# 切换到 admin 身份
+su admin
+
+# 退出
+exit
+
+# -c 执行完指令后切换回原身份
+su -c ls admin
+
+# 可以通过以下查找当前系统用户列表
+cat /etc/passwd
 ```
 
 [回目录](#目录)
