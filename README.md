@@ -23,7 +23,7 @@
 - 鸡助命令
   - [cal](#cal)
 - 其他
-  - [echo](#echo) | [date](#date) | [man](#man) | [sleep](#sleep) | [yum](#yum) | [history](#history)
+  - [echo](#echo) | [date](#date) | [man](#man) | [sleep](#sleep) | [yum](#yum) | [history](#history) | [xargs](#xargs)
 
 ## head
 显示某个文件的前十行
@@ -1122,6 +1122,19 @@ su -c ls admin
 
 # 可以通过以下查找当前系统用户列表
 cat /etc/passwd
+```
+
+### xargs
+给命令传递参数的一个过滤器，也是组合多个命令的一个工具, `将左侧的标准输出放进右侧标准输入`。
+
+此命令可以将多次操作简便为一次操作。
+
+```bash
+# 统计代码
+find -name "*.js" | xargs wc -l # 等价于 wc -l a.js b.js c.js ...
+
+# 批量下载文件
+cat download.txt | xargs wget
 ```
 
 [回目录](#目录)
