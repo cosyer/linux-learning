@@ -17,7 +17,7 @@
 - 压缩、解压
   - [zip](#zip) | [unzip](#unzip) | [bzip2](#bzip2)
 - 网络
-  - [wget](#wget) | [curl](#curl)
+  - [wget](#wget) | [curl](#curl) | [scp](#scp)
 - 磁盘
   - [df](#df)
 - 鸡助命令
@@ -1135,6 +1135,24 @@ find -name "*.js" | xargs wc -l # 等价于 wc -l a.js b.js c.js ...
 
 # 批量下载文件
 cat download.txt | xargs wget
+```
+
+### scp
+加密的方式在本地主机和远程主机之间复制文件
+注：需要有读写权限，否则会无法操作。
+
+```bash
+# 从远程主机下载文件到本地
+scp root@192.168.0.100:/root/file.zip /home/file.zip
+
+# 从远程主机下载目录到本地，需要 -r 递归
+scp -r root@192.168.0.100:/root/dir  /home/dir
+
+# 从本地主机上传文件到远程主机
+scp /home/file.zip root@192.168.0.100:/root/file.zip
+
+# # 从本地主机上传目录到远程主机，需要 -r 递归
+scp -r /home/dir root@192.168.0.100:/root/dir
 ```
 
 [回目录](#目录)
