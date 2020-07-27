@@ -6,7 +6,7 @@
 
 # 目录
 - 文件管理
-  - [head](#head) | [tail](#tail) | [ls](#ls) | [pwd](#pwd) | [wc](#wc) | [find](#find) | [mkdir](#mkdir) | [chattr](#chattr) | [more](#more) | [paste](#paste) | [stat](#stat)
+  - [head](#head) | [tail](#tail) | [ls](#ls) | [pwd](#pwd) | [wc](#wc) | [find](#find) | [mkdir](#mkdir) | [chattr](#chattr) | [more](#more) | [paste](#paste) | [stat](#stat) | [grep](#grep)
   - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate) | [open](#open) | [source](#source) | [tree](#tree) | [md5sum](#md5sum)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
@@ -1153,6 +1153,33 @@ scp /home/file.zip root@192.168.0.100:/root/file.zip
 
 # # 从本地主机上传目录到远程主机，需要 -r 递归
 scp -r /home/dir root@192.168.0.100:/root/dir
+```
+
+### grep
+强大的文本搜索工具，被称为Linux命令三剑客
+
+```bash
+# 从 README.md 文件中搜索 linux 关键字
+grep "linux" README.md
+grep "linux" README.md README2.md # 多个文件搜索
+
+# 输出时高亮显示
+grep "linux" README.md --color
+
+# -o 只输出匹配部分
+grep -o "linux" README.md --color
+
+# -n 输出到匹配的行数
+grep -n "linux" README.md
+
+# -c 输出到匹配次数
+grep -c "linux" README.md
+
+# -r 递归目录文件搜索
+grep -r "linux" ./src
+
+# 使用正则表达式搜索, 正则表达式语法与大部分编程语言基本上一致
+egrep "[0-9]" # 等价于 grep -E "[0-9]" README.md
 ```
 
 [回目录](#目录)
