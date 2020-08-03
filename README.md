@@ -11,7 +11,7 @@
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
   - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps) | [uptime](#uptime) | [crontab](#crontab) | [su](#su)
-  - [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) | [chomod](#chomod) | [lsof](#lsof) | [netstat](#netstat) | [w](#w) | [chown](#chown)
+  - [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) | [chomod](#chomod) | [lsof](#lsof) | [netstat](#netstat) | [w](#w) | [chown](#chown)  | [systemctl](#systemctl)
 - 系统设置
   - [alias](#alias) | [time](#time) | [clear](#clear)
 - 压缩、解压
@@ -1182,10 +1182,37 @@ grep -r "linux" ./src
 egrep "[0-9]" # 等价于 grep -E "[0-9]" README.md
 ```
 
-## tar
+### systemctl
+系统服务管理器指令, 通常用来设置某个服务器默认开机启动或关闭。
+
 ```bash
-tar -zcvf 1.tar.gz xxx
-tar -zxvf 1.tar.gz
+# 立即启动服务
+systemctl start nginx.service
+
+# 立即停止服务
+systemctl stop nginx.service
+
+# 重启服务，stop 后 start
+systemctl restart nginx.service
+
+# 重新载入服务, 一般情况下重新载入新的配置
+systemctl reload nginx.service
+
+# 下次开机时默认启动服务
+systemctl enable nginx.service
+
+# 下次开机时不会启动服务
+systemctl disable nginx.service
+
+# 查看某个服务状态信息
+systemctl status nginx.service
+
+# 当前服务是否正在运行中
+systemctl is-active nginx.service
+
+# 查看服务开机有没有默认启动
+systemctl is-enable nginx.service
 ```
+
 
 [回目录](#目录)
