@@ -1182,4 +1182,10 @@ grep -r "linux" ./src
 egrep "[0-9]" # 等价于 grep -E "[0-9]" README.md
 ```
 
+## tar
+```bash
+tar -zcvf 1.tar.gz xxx
+tar -zxvf 1.tar.gz
+```
+
 [回目录](#目录)
