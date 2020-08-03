@@ -1214,5 +1214,9 @@ systemctl is-active nginx.service
 systemctl is-enable nginx.service
 ```
 
+## tar
+```bash
+tar -zcvf 1.tar.gz xxx
+tar -zxvf 1.tar.gz
 
 [回目录](#目录)
