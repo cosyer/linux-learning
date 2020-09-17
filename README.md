@@ -273,7 +273,7 @@ ssh -p 23 root@192.168.0.0
 nohup node main.js
 
 # 在当前目录会出现 nohup.out 文件，里面包含了 Hello World
-nohuo echo "Hello World"
+nohup echo "Hello World"
 ```
 
 
