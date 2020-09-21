@@ -7,7 +7,7 @@
 # 目录
 - 文件管理
   - [head](#head) | [tail](#tail) | [ls](#ls) | [pwd](#pwd) | [wc](#wc) | [find](#find) | [mkdir](#mkdir) | [chattr](#chattr) | [more](#more) | [paste](#paste) | [stat](#stat) | [grep](#grep)
-  - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate) | [open](#open) | [source](#source) | [tree](#tree) | [md5sum](#md5sum)
+  - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate) | [open](#open) | [source](#source) | [tree](#tree) | [ln](#ln)
 - 系统管理
   - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
   - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps) | [uptime](#uptime) | [crontab](#crontab) | [su](#su)
@@ -16,6 +16,8 @@
   - [alias](#alias) | [time](#time) | [clear](#clear)
 - 压缩、解压
   - [zip](#zip) | [unzip](#unzip) | [bzip2](#bzip2)
+- 加解密
+  - [md5sum](#md5sum) | [base64](#base64)
 - 网络
   - [wget](#wget) | [curl](#curl) | [scp](#scp)
 - 磁盘
@@ -1221,6 +1223,49 @@ systemctl is-enable nginx.service
 ```bash
 tar -zcvf 1.tar.gz xxx
 tar -zxvf 1.tar.gz
+```
+
+## base64
+base64 编码/解码文件或标准输入输出
+```bash
+# 编码字符串
+printf "hello world"|base64 # aGVsbG8gd29ybGQ=
+
+# 解码字符串
+printf aGVsbG8gd29ybGQ=|base64 -d # hello world
+
+# 编码文件, 将结果保存在 decode.txt
+base64 README.md > decode.txt
+
+# 从标准输入中读取已经进行base64编码的内容进行解码
+base64 -d decode.txt
+```
+
+## ln
+将某一个文件在另外一个位置建立并产生同步的链接。 当不同的2个目录需要同时引用某一个文件时此命令就派上用场了。
+
+软链接：
+
+- 软链接，以路径的形式存在。类似于Windows操作系统中的快捷方式
+- 软链接可以 跨文件系统 ，硬链接不可以
+- 软链接可以对一个不存在的文件名进行链接
+- 软链接可以对目录进行链接
+
+硬链接：
+
+- 硬链接，以文件副本的形式存在。但不占用实际空间。
+- 不允许给目录创建硬链接
+- 硬链接只有在同一个文件系统中才能创建
+
+```bash
+# 默认创建硬链接，修改 README.md 内容， a.md 也会同步修改, 修改a.md  README.md 也会同步修改
+ln README.md a.md
+
+# -s 创建软链接
+ln -s README.md a.md # 如果删除了 README.md  a.md 将失效
+
+# -f 强制执行
+ln -f README.md ./src/a.md
 ```
 
 [回目录](#目录)
