@@ -21,11 +21,13 @@
 - 网络
   - [wget](#wget) | [curl](#curl) | [scp](#scp)
 - 磁盘
-  - [df](#df)
+  - [df](#df) | [du](#du)
+- 包管理
+  - [yum](#yum) | [apt-get](#apt-get)
 - 鸡助命令
   - [cal](#cal)
 - 其他
-  - [echo](#echo) | [date](#date) | [man](#man) | [sleep](#sleep) | [yum](#yum) | [history](#history) | [xargs](#xargs)
+  - [echo](#echo) | [date](#date) | [man](#man) | [sleep](#sleep) | [history](#history) | [xargs](#xargs)
 
 ## head
 显示某个文件的前十行
@@ -202,6 +204,22 @@ df -h
 
 # 查看全部文件系统信息
 df -a
+```
+
+## du
+显示文件或目录所占用的磁盘空间
+```bash
+# 查看指定文件所占用磁盘空间
+du README.md
+
+# 查看指定目录所占用磁盘空间, 输出的最后一行是累计总大小
+du src
+
+# -h 以K，M，G为单位，提高信息的可读性。
+du -h src  # 20K    src
+
+# -s 只显示总大小，列出最后累计的值
+du -s src
 ```
 
 ## find
@@ -1287,6 +1305,57 @@ service docker restart
 
 # 查看所有服务状态
 service --status-all
+```
+
+## free
+显示内存使用情况
+选项
+- b 字节单位显示
+- k KB单位显示
+- m MB单位显示
+- g GB单位显示
+- s<秒> 每S秒监控内存使用情况
+
+解释
+- total 内存总数
+- used 已使用内存
+- free 空闲内存
+- shared 当前已废弃内存
+- buff/cache 缓存内存数
+- 1204660 可用内存数
+
+```bash
+free
+# 输出以下, 默认以字节为单位
+              total        used        free      shared  buff/cache   available
+Mem:        1882192      485312      448424         704      948456     1204660
+Swap:             0           0           0
+
+# MB单位显示
+free - m
+
+# 10秒执行一次查询
+free -s 10
+```
+
+## apt-get
+apt-get命令 是Debian Linux发行版中的APT软件包管理工具。所有基于Debian的发行都使用这个包管理系统。
+
+```bash
+# 安装一个docker软件
+apt-get install docker
+
+# 卸载软件，保留配置文件
+apt-get remove docker
+
+# 卸载软件并删除配置文件
+apt-get –purge remove docker
+
+# 更新所有已安装的软件包
+apt-get upgrade
+
+# 删除软件备份，主要用来释放空间
+apt-get clean
 ```
 
 [回目录](#目录)
