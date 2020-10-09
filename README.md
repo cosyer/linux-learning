@@ -6,28 +6,117 @@
 
 # 目录
 - 文件管理
-  - [head](#head) | [tail](#tail) | [ls](#ls) | [pwd](#pwd) | [wc](#wc) | [find](#find) | [mkdir](#mkdir) | [chattr](#chattr) | [more](#more) | [paste](#paste) | [stat](#stat) | [grep](#grep)
-  - [touch](#touch) | [cd](#cd) | [rm](#rm) | [rmdir](#rmdir) | [cp](#cp) | [cat](#cat) | [mv](#mv) | [locate](#locate) | [open](#open) | [source](#source) | [tree](#tree) | [ln](#ln)
+  - [head](#head)
+  - [tail](#tail)
+  - [ls](#ls)
+  - [pwd](#pwd)
+  - [wc](#wc)
+  - [find](#find)
+  - [mkdir](#mkdir)
+  - [chattr](#chattr)
+  - [more](#more)
+  - [paste](#paste)
+  - [stat](#stat)
+  - [grep](#grep)
+  - [touch](#touch)
+  - [cd](#cd)
+  - [rm](#rm)
+  - [rmdir](#rmdir)
+  - [cp](#cp)
+  - [cat](#cat)
+  - [mv](#mv)
+  - [locate](#locate)
+  - [open](#open)
+  - [source](#source)
+  - [tree](#tree)
+  - [ln](#ln)
+  - [file](#file)
 - 系统管理
-  - [top](#top) | [whoami](#whoami) | [nohup](#nohup) | [watch](#watch) | [ping](#ping) | [which](#which) | [last](#last)
-  - [shutdown](#shutdown) | [reboot](#reboot) | [ps](#ps) | [uptime](#uptime) | [crontab](#crontab) | [su](#su)
-  - [uname](#uname) | [ifconfig](#ifconfig) | [who](#who) | [whereis](#whereis) | [kill](#kill) | [chomod](#chomod) | [lsof](#lsof) | [netstat](#netstat) | [w](#w) | [chown](#chown)  | [systemctl](#systemctl)  | [service](#service)
-- 系统设置
-  - [alias](#alias) | [time](#time) | [clear](#clear)
+  - [top](#top)
+  - [whoami](#whoami)
+  - [nohup](#nohup)
+  - [watch](#watch)
+  - [ping](#ping)
+  - [which](#which)
+  - [last](#last)
+  - [shutdown](#shutdown)
+  - [reboot](#reboot)
+  - [ps](#ps)
+  - [uptime](#uptime)
+  - [crontab](#crontab)
+  - [su](#su)
+  - [uname](#uname)
+  - [ifconfig](#ifconfig)
+  - [who](#who)
+  - [whereis](#whereis)
+  - [kill](#kill)
+  - [killall](#killall)
+  - [chmod](#chmod)
+  - [lsof](#lsof)
+  - [netstat](#netstat)
+  - [w](#w)
+  - [chown](#chown)
+  - [systemctl](#systemctl)
+  - [service](#service)
+  - [free](#free)
+  - [jobs](#jobs)
+  - [type](#type)
+  - [printenv](#printenv)
+  - [set](#set)
+  - [export](#export)
+  - [unset](#unset)
+  - [alias](#alias)
+  - [time](#time)
+  - [clear](#clear)
 - 压缩、解压
-  - [zip](#zip) | [unzip](#unzip) | [bzip2](#bzip2)
+  - [zip](#zip)
+  - [unzip](#unzip)
+  - [gzip](#gzip)
+  - [bzip2](#bzip2)
+  - [tar](#tar)
 - 加解密
-  - [md5sum](#md5sum) | [base64](#base64)
+  - [md5sum](#md5sum)
+  - [base64](#base64)
 - 网络
-  - [wget](#wget) | [curl](#curl) | [scp](#scp)
+  - [wget](#wget)
+  - [curl](#curl)
+  - [scp](#scp)
 - 磁盘
-  - [df](#df) | [du](#du)
+  - [df](#df)
+  - [du](#du)
 - 包管理
-  - [yum](#yum) | [apt-get](#apt-get)
-- 鸡助命令
-  - [cal](#cal)
+  - [yum](#yum)
+  - [apt-get](#apt-get)
 - 其他
-  - [echo](#echo) | [date](#date) | [man](#man) | [sleep](#sleep) | [history](#history) | [xargs](#xargs)
+  - [目录名称含义](#目录名称含义)
+  - [echo](#echo)
+  - [date](#date)
+  - [man](#man)
+  - [sleep](#sleep)
+  - [history](#history)
+  - [xargs](#xargs)
+  - [cal](#cal)
+
+## 目录名称含义
+- / - 虚拟目录的根目录，通常不会在这里存储文件
+- /bin - 二进制目录，存放许多用户级的GNU工具
+- /boot - 启动目录，存放启动文件
+- /dev - 设备目录，Linux在这里创建设备节点
+- /etc - 系统配置文件目录
+- /home - 主目录，Linux在这里创建用户目录
+- /lib - 库目录，存放系统和应用程序的库文件
+- /media - 媒体目录，可移动媒体设备的常用挂载点
+- /mnt - 挂载目录，另一个可移动媒体设备的常用挂载点
+- /opt - 可选目录，常用于存放第三方软件包和数据文件
+- /proc - 进程目录，存放现有硬件及当期进程的相关信息
+- /root - ROOT用户的主目录
+- /sbin - 系统二进制目录，存放许多GNU管理员级工具
+- /run - 运行目录，存放系统运作时的运行时数据
+- /srv - 服务目录，存放本地服务的相关文件
+- /sys - 系统目录，存放系统硬件信息的相关文件
+- /tmp - 临时目录，可以在该目录中创建和删除临时工作文件
+- /usr - 用户二进制目录，大量用户级的GNU工具和数据文件都存储在这里
+- /var - 可变目录，用以存放经常变化的文件，比如日志文件
 
 ## head
 显示某个文件的前十行
@@ -1356,6 +1445,87 @@ apt-get upgrade
 
 # 删除软件备份，主要用来释放空间
 apt-get clean
+```
+
+## file
+查看文件类型，比如文件、目录、二进制、符号链接等
+
+```bash
+# 输出 README.md: ASCII text
+file README.md
+
+# index.html: HTML document, UTF-8 Unicode text, with very long lines, with no line terminators
+file index.html
+```
+
+## jobs
+显示当前运行在后台模式中的所有用户的进程（作业）
+
+```bash
+# 先来启一个后台进程, 比如启一个sleep命令进程， & 符号表示后台运行
+sleep 3 &
+# 查看后台进程
+jobs # 输出：[1]+  Running       sleep 3 &
+```
+
+## type
+type 命令有2个作用：
+- 用来查找命令的位置，类似 which 命令
+- 检测某个命令是内建命令还是外部命令
+
+内建命令和外部命令的区别：内建命令不会衍生出子进程，而外部命令会衍生出一个子进程然后执行命令, 所以内建命令执行效率要高。
+
+```bash
+# cd is a shell builtin  表示这是shell内建命令
+type cd
+
+# ps is hashed (/usr/bin/ps)  表示这是一个外部命令
+type ps
+```
+
+## printenv
+列出全局环境变量, 有个 env 命令很像，但 printenv 可以打印变量的值。所有系统环境变量都是大写字母，用于区分普通用户的环境变量。
+
+```bash
+# 列出所有全局环境变量
+printenv
+
+# 也可以显示指定全局环境变量的值, 等价于 echo $HOME
+printenv HOME # /root
+```
+
+## set
+列出所有全局变量、局部变量和普通用户定义的变量，按照字母顺序对结果进行排序。注意：所有系统全局变量都是大写，用户定义的环境变量全部采用小
+写，这是标准规范。
+
+```bash
+set
+# OPTIND=1
+# OSTYPE=linux-gnu
+# PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+# PIPESTATUS=([0]="0")
+# ...
+```
+
+## export
+导出环境变量, 可以把一个局部变量导出成全局环境变量。注意：export 只有在当前Shell有效，退出后将失效。
+
+```bash
+# 先声明一个局部环境变量
+my_var='Hello'
+# 然后将其导出全局环境变量
+export my_var
+```
+
+## unset
+删除环境变量
+
+注意：unset 只在当前shell删除环境变量，假如环境变量设置在 ~/.bash_profile 等文件中用户重新启动依然生效。如果是在子进程删除全局环境变
+量只在子进程有效，不会影响父进程。
+
+```bash
+# 删除 HOME 环境变量，前面不需要带 $ 符号
+unset HOME
 ```
 
 [回目录](#目录)
