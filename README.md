@@ -5,7 +5,7 @@
 ---
 
 # 目录
-- 文件管理
+- 文件操作
   - [head](#head)
   - [tail](#tail)
   - [ls](#ls)
@@ -13,6 +13,7 @@
   - [wc](#wc)
   - [find](#find)
   - [mkdir](#mkdir)
+  - [mktemp](#mktemp)
   - [chattr](#chattr)
   - [more](#more)
   - [paste](#paste)
@@ -33,28 +34,23 @@
   - [file](#file)
 - 系统管理
   - [top](#top)
-  - [whoami](#whoami)
   - [nohup](#nohup)
   - [watch](#watch)
   - [ping](#ping)
   - [which](#which)
-  - [last](#last)
   - [shutdown](#shutdown)
   - [reboot](#reboot)
   - [ps](#ps)
   - [uptime](#uptime)
   - [crontab](#crontab)
-  - [su](#su)
   - [uname](#uname)
   - [ifconfig](#ifconfig)
-  - [who](#who)
   - [whereis](#whereis)
   - [kill](#kill)
   - [killall](#killall)
   - [chmod](#chmod)
   - [lsof](#lsof)
   - [netstat](#netstat)
-  - [w](#w)
   - [chown](#chown)
   - [systemctl](#systemctl)
   - [service](#service)
@@ -68,6 +64,18 @@
   - [alias](#alias)
   - [time](#time)
   - [clear](#clear)
+- 用户管理
+  - [useradd](#useradd)
+  - [userdel](#userdel)
+  - [passwd](#passwd)
+  - [chpasswd](#chpasswd)
+  - [chsh](#chsh)
+  - [users](#users)
+  - [who](#who)
+  - [w](#w)
+  - [last](#last)
+  - [su](#su)
+  - [whoami](#whoami)
 - 压缩、解压
   - [zip](#zip)
   - [unzip](#unzip)
@@ -89,6 +97,8 @@
   - [apt-get](#apt-get)
 - 其他
   - [目录名称含义](#目录名称含义)
+  - [重定向输入和输出](#重定向输入和输出)
+  - [管道](#管道)
   - [echo](#echo)
   - [date](#date)
   - [man](#man)
@@ -96,6 +106,14 @@
   - [history](#history)
   - [xargs](#xargs)
   - [cal](#cal)
+  - [expr](#expr)
+  - [bc](#bc)
+  - [timeout](#timeout)
+  - [exit](#exit)
+  - [vim](#vim)
+  - [basename](#basename)
+  - [read](#read)
+  - [tee](#tee)
 
 ## 目录名称含义
 - / - 虚拟目录的根目录，通常不会在这里存储文件
@@ -574,6 +592,237 @@ Su Mo Tu We Th Fr Sa
 
 # 显示临近3个月, 只能是3个月
 cal -3
+```
+
+## expr
+执行数学运算，expr 命令比较鸡助，通常在 shell 脚本当中看到。但在shell脚本也不建议用。
+
+expr 后面每个表达式都要有一个空格，否则是不合法。
+
+注：expr 只支持整数运算，这是一个限制。
+
+```bash
+# 3
+expr 1 + 2
+expr 1+2 # 这样是不行的
+
+# 在浮点数计算时会丢失小数， 这里等于 2
+expr 5 / 2
+```
+
+## bc
+bash计算器，用来执行数学运算， 与 `expr` 不同，因为 `expr` 命令不支持浮点数运算，所以可以用 `bc` 命令替代。
+
+bash计算器实际上是一种编程语言，它允许在命令行中输入浮点表达式，然后解释并计算该表达式。最后返回结果。
+
+`bc` 大多数情况下是在 shell 脚本中使用。
+
+```bash
+# 敲 bc 然后回车进入交互式， 输入 quit 退出
+bc
+
+scale=2  # 保留几位小数，默认是0
+5 / 2
+# 输出 2.50
+```
+
+**在 shell 脚本使用**
+
+```bash
+#!/bin/bash
+
+# 配合管道
+n=$(echo "scale=2; 5 / 2" | bc)
+
+echo $n
+
+
+# 第二种, 内联重定向，解决第一种表达式过长问题
+n1=$(
+bc << EOF
+scale=2
+5 / 2
+EOF
+)
+
+echo $n1
+```
+
+## timeout
+在指定时长范围内执行命令，并在规定时间结束后停止进程。
+
+意思是在规定时间内必须完成，否则停止进程。
+```bash
+# 模拟超过3秒, 因为sleep阻塞5秒所以在3秒内无法完成，则停止进程
+time 3 sleep 5
+
+# 比如打包, 1分钟内要打包完成，否则停止进程
+time 60 npm run build
+```
+
+## exit
+退出当前登录Shell, 可以使用快捷键退出 `Ctrl + D`。
+
+等价命令 `logout`
+
+```bash
+exit
+```
+
+## vim
+vi 编辑器是Unix系统最初的编辑器，在GNU项目将vi编辑器移植到开源世界时，他们决定对其做一些改进，开发人员也就将它重命名为 `vi improved`。
+
+`vim`(vi improved) 是 `vi` 的升级版，所以只需要知道 `vim` 即可， 是一个非强大的文本编辑器，学习成本不低，需要长期使用才能记牢每一个指令操作。
+
+这是一份速查表，使用的时候注意区分大小写。
+
+vim 的快捷键指令非常多，只列出一些实用性便于记忆。
+
+**打开文件**
+
+```bash
+# 最简单的打开文件方式, 如果文件不存在会开辟一段新的缓冲区域来编辑。
+vim README.md
+
+# 打开文件并定位到最后一行
+vim + README.md
+
+# 打开文件并定位到某一行, +号后面指定行数
+vim +100 README.md
+
+# 打开多个文件
+# :bn 切换下一个文件
+# :bp 切换上一个文件
+vim 1.txt 2.txt
+```
+
+**光标定位插入**
+
+| 快捷键      | 描述              |
+| ---------- |----------------- |
+| i   | 在当前光标位置插入 |
+| I   | 在当前光标行第一个字符插入 |
+| a   | 在当前光标后一个字符插入 |
+| A   | 光标到当前行最后一个字符插入 |
+| H   | 光标到第一行第一个字符 (是以终端大小来计算，不是原文本的第一行) |
+| M   | 光标到中间第一行 (是以终端大小来计算) |
+| L   | 光标到最后行第一个字符 (是以终端大小来计算) |
+| E   | 将光标定位到右边的空格 |
+| o   | 在当前光标下一行插入 |
+| O   | 在当前光标上一行插入 |
+
+
+**撤销**
+| 快捷键      | 描述              |
+| ---------- |----------------- |
+| u   | 撤销上一次编辑内容 |
+| U   | 撤销当前光标整行内容 |
+| Ctrl + r   | 还原初始文件状态 |
+
+**删除**
+| 快捷键      | 描述              |
+| ---------- |----------------- |
+| dd   | 删除当前行 |
+| dj   | 删除上一行 |
+| dk   | 删除下一行 |
+| :1,$d   | 删除所有行 |
+
+**拷贝/粘贴**
+| 快捷键      | 描述              |
+| ---------- |----------------- |
+| yy   | 拷贝当前行 |
+| p   | 在当前光标粘贴上一次拷贝的内容 |
+
+**搜索**
+
+| 快捷键      | 描述              |
+| ---------- |----------------- |
+| :/text   | 从上往下查找 text，按 `n` 向下搜索, 按 `N` 想前搜索 |
+| :?text   | 从下往上查找 text，按 `n` 向下搜索, 按 `N` 想前搜索 |
+
+
+**替换**
+
+| 快捷键      | 描述              |
+| ---------- |----------------- |
+| :s/old/new   | 找到old第一次出现的地方并用new来替换 |
+| :s/old/new/g   | 找到所有old出现的地方并用new来替换(当前屏幕) |
+| :%s/old/new/g   | 替换整个文件中的所有old |
+| :%s/old/new/gc   | 替换整个文件中的所有old，但在每次出现时提示 |
+| :n,ms/old/new/g   | 替换行号n和m之间的所有old |
+
+**退出**
+
+先按 `ESC` 键然后再操作后面的快捷键。
+
+| 快捷键 | 描述              |
+| ----- |----------------- |
+| :w    | 写入但不退出 |
+| :q!   | 退出但不保存 |
+| :wq   | 保存写入内容并退出 |
+
+**设置**
+
+| 快捷键 | 描述              |
+| ----- |----------------- |
+| :set ignorecase    | 忽略大小写查找 |
+| :set noignorecase   | 不忽略大小写查找 |
+| :set hlsearch   | 高亮搜索结果 |
+| :set nohlsearch   | 关闭高亮搜索显示 |
+| :set hlsearch   | 高亮搜索结果 |
+| :set number   | 显示行号 |
+| :set nonumber   | 不显示行号 |
+
+## read
+`read` 命令从标准输入（键盘）或另一个文件描述符中接收输入。 通常用在Shell脚本, 在收到输入后，read命令会将数据存放进一个变量。
+
+```bash
+# 最简单用法, data 是自定义变量名，用户输入内容并回车后结束
+read data # echo $data  会打印用户输入的内容
+
+# -p 指定提示符
+read -p 确认要删除吗？ data
+
+# -t 指定超时（秒）
+read -t 5 -p 确认要删除吗？ data
+
+# —s 隐藏用户输入，比如密码，实际上是将文本颜色设置成背景颜色一样
+read -s -p "请输入您的密码：" data
+```
+
+## basename
+打印目录或者文件的基本名称。
+
+```bash
+# 输出：index.html
+basename /www/index.html
+
+# 输出 www
+basename /www/
+```
+
+## tee
+tee命令相当于管道的一个T型接头，它将从`STDIN标准输入`过来的数据同时发往两处，一处是`STDOUT`，另一处是tee命令指定的文件名。
+
+tee 命令通常用于 shell 脚本当中。
+
+```bash
+# date内容打印到屏幕上并且重定向输出到 date.txt 文件中
+date | tee date.txt
+
+# -a 以追加方式，默认情况下会覆盖输出文件内容
+date | tee -a date.txt
+```
+
+`tee` 命令只是一个语法糖，如果不用 `tee` 可以这样做：
+
+```bash
+# 1、将date结果保存到 var 变量中
+var=$(date)
+# 2、将结果打印到屏幕上 STDOUT
+echo $var
+# 3、将结果重定向到文件
+echo $var > date.txt
 ```
 
 ## last
@@ -1526,6 +1775,122 @@ export my_var
 ```bash
 # 删除 HOME 环境变量，前面不需要带 $ 符号
 unset HOME
+```
+
+## useradd
+给系统添加新用户
+- 在创建新用户时如果不指定具体的值，就会使用系统那些默认值。
+- 在创建新用户时如果未指定密码，需要使用 passwd 命令进行更改。
+
+#### useradd 命令行参数
+| 参数        | 描述              |
+| ---------- |------------------ |
+| -c comment      | 给新用户添加备注     |
+| -d home_dir      | 为主目录指定一个名字（如果不想用登录名作为主目录名的话）     |
+| -e expire_date      | 用YYYY-MM-DD格式指定一个账户过期的日期     |
+| -f inactive_days      | 指定这个账户密码过期后多少天这个账户被禁用；0表示密码已过期就立即禁用，1表示禁用这个功能     |
+| -g initial_group      | 指定用户登录组的GID或组名     |
+| -G group      | 指定用户除登录组之外所属的一个或多个附加组     |
+| -k      | 必须和-m一起使用，将/etc/skel目录的内容复制到用户的HOME目录     |
+| -m      | 创建用户的HOME目录     |
+| -M      | 不创建用户的HOME目录（当默认设置里要求创建时才使用这个选项）     |
+| -n      | 创建一个与用户登录名同名的新租     |
+| -r      | 创建系统账户     |
+| -p passwd      | 为用户账户指定默认密码 (需要使用openssl把明文进行加密后设置，否则无效)     |
+| -s shell      | 指定默认的登录shell     |
+| -u uid      | 为账户指定唯一的UID     |
+
+#### 更改默认值参数
+| 参数        | 描述              |
+| ---------- |------------------ |
+| -b default_home      | 更改默认的创建用户HOME目录的位置     |
+| -e expiration_date      | 更改默认的心账户的过期日期     |
+| -f inactive      | 更改默认的心用户从密码过期到账户被禁用的天数     |
+| -g group      | 更改默认的组名称或GID     |
+| -s shell      | 更改默认的登录shell     |
+
+```bash
+# -D, 查看默认值
+useradd -D
+# 输出：
+GROUP=100                # 新用户会被添加到GID为100的公共组
+HOME=/home               # 新用户的HOME目录将位于 /home/loginname
+INACTIVE=-1              # 新用户账户密码在过期后不会被禁用
+EXPIRE=                  # 新用户账户未被设置过期日期
+SHELL=/bin/bash          # 新用户账户将bash shell作为默认shell
+SKEL=/etc/skel           # 系统会将/etc/skel目录下的内容复制到用户的HOME目录下
+CREATE_MAIL_SPOOL=yes    # 系统为该用户账户在mail目录下创建一个用于接收邮件的文件
+
+# 创建一个 test 用户, -m 创建 /home/test 目录
+useradd -m test
+
+# 创建一个用户并设置密码
+useradd -m test # 不指定-p，因为需要加密那样很麻烦
+passwd test # 通过passwd修改指定用户密码
+```
+
+添加新用户后可以执行 `cat /etc/passwd` 查看用户列表。
+
+## userdel
+删除用户
+
+```bash
+# 删除用户，默认会从 /etc/passwd 文件中删除用户信息，而不会删除系统中属于该账户的任何文件
+userdel 用户名
+
+# -r 用来删除用户目录， 之前创建的 /home/用户名 就不存在了, 使用-r参数需要小心，要检查是否有重要文件。
+userdel -r 用户名
+```
+
+## passwd
+修改用户密码, 只有 `root` 用户才有权限修改别人的密码。
+
+使用 `passwd` 一般用于修改单个用户密码，如果想批量修改那么需要 `chpasswd` 命令。
+
+```bash
+# 如果不指定用户名，修改的是自己当前用户密码， 回车后输入新密码
+passwd
+
+# 修改指定用户密码，比如test用户
+passwd test
+```
+
+## chpasswd
+类似 `passwd` 命令也是用于修改用户密码，但它支持批量修改用户。
+
+`chpasswd` 命令从标准输入自动读取登录名和密码对（由冒号分割）列表，给密码加密。
+
+```bash
+# 利用输入重定向从文本中读取
+chpasswd < users.txt
+
+# 从标准输入读取
+echo 'test:fff33300..a' | chpasswd
+```
+
+user.txt 内容：
+```txt
+test:helloworld0123..
+test1:fff33300..
+admin:youyouyou00..11
+```
+
+## chsh
+修改默认用户登录 shell 
+
+```bash
+# 必须使用完整路径，不能使用shell名
+chsh -s /bin/sh
+```
+
+## users
+显示当前登录系统的所有用户的用户列表
+
+```bash
+users
+# cosyer
+# root
+# admin
 ```
 
 [回目录](#目录)
