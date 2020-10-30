@@ -86,9 +86,11 @@
   - [md5sum](#md5sum)
   - [base64](#base64)
 - 网络
+  - [ssh](#ssh)
   - [wget](#wget)
   - [curl](#curl)
   - [scp](#scp)
+  - [rsync](#rsync)
 - 磁盘
   - [df](#df)
   - [du](#du)
@@ -1514,6 +1516,86 @@ scp /home/file.zip root@192.168.0.100:/root/file.zip
 
 # # 从本地主机上传目录到远程主机，需要 -r 递归
 scp -r /home/dir root@192.168.0.100:/root/dir
+```
+
+### rsync
+rsync 命令是一个远程数据同步工具，可通过LAN/WAN快速同步多台主机间的文件。rsync使用所谓的“rsync算法”来使本地和远程两个主机之间的文件达到同步，这个算法只传送两个文件的不同部分，而不是每次都整份传送，因此速度相当快。
+
+`rsync` 非常强大，可以用来替代 `cp` / `mv` / `scp` 等命令。
+
+
+| 参数         | 描述              |
+| ----------- |------------------- |
+| -r          | 递归拷贝子目录 |
+| -a          | 递归拷贝子目录，但同步元数据信息，比如修改时间，创建时间，权限等 |
+| -n          | 模拟执行结果 |
+| -v          | 显示执行过程 |
+| -z          | 压缩传输 |
+| --exclude   | 排除文件 |
+| --include   | 包含文件 |
+| --progress  | 显示传输进度信息 |
+| --link-dest | 指定增量备份的基准目录 |
+
+
+source 有没有斜杠影响同步结果：
+- 有斜杠 - dst目录下只有 source 文件
+- 无斜杠 - dst目录包含source目录
+
+```bash
+# 无斜杠, dst 目录下只有 source目录
+rsync -r source dst
+
+# 有斜杠, dst 目录下包含 source 所有文件，没有source目录
+rsync -r source/ dst
+```
+
+
+#### 本地同步文件
+```bash
+# -r 表示递归拷贝子目录，将 source 拷贝到 dst 目录下
+rsync -r source dst # dst 目录下就有 source
+
+# 可以将多个source 拷贝到指定目录下
+rsync -r source1 source2 dst
+
+# -a替代-r, 同步元数据信息，比如修改时间，创建时间，权限等
+rsync -a source dst
+```
+
+
+#### 远程同步文件
+```bash
+# 本地同步到远程, 本地 docs 目录同步到远程 home/docs 下
+rsync -rv ~/docs root@192.168.0.0:/home/docs
+
+# 远程同步到本地, 将远程 /home/docs 目录同步到本地 ~/docs 下
+rsync -rv root@192.168.0.0:/home/docs ~/docs
+```
+
+
+#### 增量备份
+`rsync` 最大的特点就是支持增量备份，所谓增量备份指的是只同步有变动的文件。
+
+`rsync` 默认就是增量备份的，但可以添加 `--link-dest` 参数指定基准目录进行比较，找出有变动的文件。
+
+```bash
+# --link-dest 后面跟着基准目录，然后会跟 source 进行一一比较，找出变动的文件进行同步
+rsync -a --link-dest compare source dest
+```
+
+
+#### 其他用法
+```bash
+# 排除文件
+rsync -r --exclude=".git" source dst
+# 大括号指定多个排除模式
+rsync -r --exclude={".git", ".svn"} source dst
+
+
+# 包含文件
+rsync -r --include="src/" source dst
+# 大括号指定多个包含模式
+rsync -r --include={"src/", "tests/"} source dst
 ```
 
 ### grep
