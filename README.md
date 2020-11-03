@@ -372,6 +372,22 @@ mkdir -p temp/temp2/temp3
 mkdir -m 777 temp
 ```
 
+## mktemp
+创建临时目录或文件，Linux使用 /tmp 目录来存放不需要永久保留的文件，大多数Linux发行版配置了系统在启动时自动删除 /tmp 目录的所有文件。
+
+默认情况下，mktemp 会在本地目录中创建一个文件，只要指定一个文件名模板就行，模板可以包含任意文本文件名，在文件名末尾加上6个X就行了。
+
+```bash
+# 创建本地临时文件, 会在当前目录下创建一个叫 log.XXXXXX, XXXXXX是一个随机字符码，保证文件名在目录中是唯一的。
+mktemp log.XXXXXX  # log.J3awfb
+
+# -t, 在 /tmp 目录创建临时文件, 返回绝对路径地址
+mktemp -t log.XXXXXX # /tmp/log.G5g9dX
+
+# -d 创建临时目录, 这样就能用该目录进行任何需要的操作了，比如创建其他的临时文件
+mktemp -d dir.XXXXXX
+```
+
 ## touch
 创建新的文件
 ```bash
@@ -458,7 +474,7 @@ time curl https://github.com/cosyer/linux-learning
 ## clear
 用于清除当前终端所有信息，本质上只是向后翻了一页，往上滚动还能看到之前的操作信息
 
-注：笔者用得比较多的是 `command + K` 可以完全清除终端所有操作信息。
+注：`command + K` 可以完全清除终端所有操作信息。
 ```bash
 clear
 ```
@@ -996,6 +1012,14 @@ kill -l
 kill -u nginx
 ```
 
+## killall
+杀死进程，可以杀死多个进程，比 `kill` 要强大, 支持通过进程名称杀死, 还支持通配符。
+
+```bash
+# 杀死以tcp进程名称开头的所有进程
+killall tcp*
+```
+
 ## chmod
 修改文件或目录权限
 
@@ -1122,7 +1146,7 @@ date +"%Y-%m-%d %H:%M.%S" # 2020-07-01 00:00.00
 
 # 设置系统时间
 date -s  # 设置当前时间, 须root
-date -s "2020-07-01 00:00:00" # 设置全部时间
+date -s "2020-07-01 00:00:00" # 设置指定时间
 ```
 
 ## netstat
@@ -1295,7 +1319,7 @@ more -d README.md # --More--(17%)[Press space to continue, 'q' to quit.]
 ```
 
 ## crontab
-周期性执行任务, 通常用于定时备份
+周期性执行任务, 通常用于定时执行作业
 * * * * * 分别含义：
 ```bash
 *    *    *    *    *
@@ -1326,6 +1350,13 @@ crontab -r
 
 # 每一分钟执行
 * * * * */1 echo `date` > README.md
+
+# 每个月的第一天中午12点
+00 12 1 * * 命令
+# 每个月的最后一天就比较麻烦了, 需要配合 date 命令和 if 流程语句来实现
+# 这里 if 语句检查明天的日期是不是01，如果是今天就是最后一天
+# 每天中午12点检查今天是不是最后一天
+00 12 * * * if [ `date +%d -d tomorrow` = 01 ] ; then ; 要执行的命令
 ```
 
 ### man
