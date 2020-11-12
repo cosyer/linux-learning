@@ -70,6 +70,8 @@
   - [passwd](#passwd)
   - [chpasswd](#chpasswd)
   - [chsh](#chsh)
+  - [chfn](#chfn)
+  - [usermod](#usermod)
   - [users](#users)
   - [who](#who)
   - [w](#w)
@@ -1359,7 +1361,7 @@ crontab -r
 00 12 * * * if [ `date +%d -d tomorrow` = 01 ] ; then ; 要执行的命令
 ```
 
-### man
+## man
 查看指令帮助手册
 
 ```bash
@@ -1370,7 +1372,7 @@ man ls
 man -a ls
 ```
 
-### sleep
+## sleep
 将目前动作延迟一段时间, 通常用于脚本当中
 时间参数：
 - s 秒
@@ -1383,14 +1385,35 @@ man -a ls
 sleep 5s; echo Hello
 ```
 
-### source
-在当前Shell环境中从指定文件读取和执行命令， 通常用于重新执行环境(别名 . 点符号)
+## source
+在当前Shell环境中从指定文件读取和执行命令， 通常用于重新执行环境(它有个别名 `.` 点操作符号。)
 
 ```bash
 source ~/.bash_profile  # 等价 . ~/.bash_profile
 ```
 
-### paste
+实际上大部分开发者都没搞懂 `source` 命令。 可以把它理解为编程语言中的 `import`, `java/python/js` 都有这个，就是用来导入文件。
+
+
+下面演示 source 用于 shell 脚本中
+```bash
+# util.sh
+#!/bin/bash
+getName() {
+  echo "Linux"
+}
+```
+
+```bash
+# main.sh
+#!/bin/bash
+# 加载文件
+source ./util.sh
+# 这样就可以调用 util 文件中的函数了
+echo $(getName)
+```
+
+## paste
 合并N个文件的列，相当于追加文件内容
 
 ```bash
@@ -1401,7 +1424,7 @@ paste 1.txt 2.txt
 paste 1.txt 2.txt > 3.txt
 ```
 
-### stat
+## stat
 用于显示文件或目录的状态信息
 
 ```bash
@@ -1416,7 +1439,7 @@ stat logs
 # Birth: -
 ```
 
-### tree
+## tree
 生成目录树结构, 通常用于描述项目结构
 
 ```bash
@@ -1440,7 +1463,7 @@ tree -d
 tree -L 3
 ```
 
-### yum
+## yum
 基于RPM的软件包管理器, 特点安装快捷，命令简洁好记
 
 ```bash
@@ -1472,7 +1495,7 @@ yum info nginx
 yum check-update
 ```
 
-### history
+## history
 列出当前系统使用过的命令，默认保存1000条
 
 ```bash
@@ -1489,7 +1512,7 @@ history -c
 history | grep java
 ```
 
-### md5sum
+## md5sum
 计算和校验文件报文摘要
 
 ```bash
@@ -1501,7 +1524,7 @@ md5sum README.md > README.md5 # 计算文件md5并保存在 README.md5 , 保存�
 md5sum -c README.md5 # -c 从指定的文件读取md5并校验, 会从当前目录寻找 README.md
 ```
 
-### su
+## su
 切换当前用户到其他用户
 
 ```bash
@@ -1518,7 +1541,7 @@ su -c ls admin
 cat /etc/passwd
 ```
 
-### xargs
+## xargs
 给命令传递参数的一个过滤器，也是组合多个命令的一个工具, `将左侧的标准输出放进右侧标准输入`。
 
 此命令可以将多次操作简便为一次操作。
@@ -1531,7 +1554,7 @@ find -name "*.js" | xargs wc -l # 等价于 wc -l a.js b.js c.js ...
 cat download.txt | xargs wget
 ```
 
-### scp
+## scp
 加密的方式在本地主机和远程主机之间复制文件
 注：需要有读写权限，否则会无法操作。
 
@@ -1549,7 +1572,7 @@ scp /home/file.zip root@192.168.0.100:/root/file.zip
 scp -r /home/dir root@192.168.0.100:/root/dir
 ```
 
-### rsync
+## rsync
 rsync 命令是一个远程数据同步工具，可通过LAN/WAN快速同步多台主机间的文件。rsync使用所谓的“rsync算法”来使本地和远程两个主机之间的文件达到同步，这个算法只传送两个文件的不同部分，而不是每次都整份传送，因此速度相当快。
 
 `rsync` 非常强大，可以用来替代 `cp` / `mv` / `scp` 等命令。
@@ -1581,7 +1604,7 @@ rsync -r source/ dst
 ```
 
 
-#### 本地同步文件
+### 本地同步文件
 ```bash
 # -r 表示递归拷贝子目录，将 source 拷贝到 dst 目录下
 rsync -r source dst # dst 目录下就有 source
@@ -1594,7 +1617,7 @@ rsync -a source dst
 ```
 
 
-#### 远程同步文件
+### 远程同步文件
 ```bash
 # 本地同步到远程, 本地 docs 目录同步到远程 home/docs 下
 rsync -rv ~/docs root@192.168.0.0:/home/docs
@@ -1604,7 +1627,7 @@ rsync -rv root@192.168.0.0:/home/docs ~/docs
 ```
 
 
-#### 增量备份
+### 增量备份
 `rsync` 最大的特点就是支持增量备份，所谓增量备份指的是只同步有变动的文件。
 
 `rsync` 默认就是增量备份的，但可以添加 `--link-dest` 参数指定基准目录进行比较，找出有变动的文件。
@@ -1615,7 +1638,7 @@ rsync -a --link-dest compare source dest
 ```
 
 
-#### 其他用法
+### 其他用法
 ```bash
 # 排除文件
 rsync -r --exclude=".git" source dst
@@ -1629,7 +1652,7 @@ rsync -r --include="src/" source dst
 rsync -r --include={"src/", "tests/"} source dst
 ```
 
-### grep
+## grep
 强大的文本搜索工具，被称为Linux命令三剑客
 
 ```bash
@@ -1656,7 +1679,7 @@ grep -r "linux" ./src
 egrep "[0-9]" # 等价于 grep -E "[0-9]" README.md
 ```
 
-### systemctl
+## systemctl
 系统服务管理器指令, 通常用来设置某个服务器默认开机启动或关闭。
 
 ```bash
@@ -1895,7 +1918,7 @@ unset HOME
 - 在创建新用户时如果不指定具体的值，就会使用系统那些默认值。
 - 在创建新用户时如果未指定密码，需要使用 passwd 命令进行更改。
 
-#### useradd 命令行参数
+### useradd 命令行参数
 | 参数        | 描述              |
 | ---------- |------------------ |
 | -c comment      | 给新用户添加备注     |
@@ -1913,7 +1936,7 @@ unset HOME
 | -s shell      | 指定默认的登录shell     |
 | -u uid      | 为账户指定唯一的UID     |
 
-#### 更改默认值参数
+### 更改默认值参数
 | 参数        | 描述              |
 | ---------- |------------------ |
 | -b default_home      | 更改默认的创建用户HOME目录的位置     |
@@ -1994,6 +2017,30 @@ admin:youyouyou00..11
 ```bash
 # 必须使用完整路径，不能使用shell名
 chsh -s /bin/sh
+```
+
+## chfn
+主要用于更改账号的个人信息。这些信息保存在 `/etc/passwd` 下。
+默认情况下如果不提供参数将进入问答式逐一设置。
+| 参数   | 描述              |
+| ----- |------------------ |
+| -f    | 真实姓名     |
+| -h    | 家中电话     |
+| -o    | 办公地址     |
+| -p    | 办公室电话   |
+```bash
+# 修改 root 账号信息
+chfn root
+# Changing finger information for root.
+# Name [xiejiahe]: 
+# Office [ZhuHai]: 
+# Office Phone [13xxxxxxxxx]: 
+# Home Phone [13xxxxxxxxx]: 
+```
+
+```bash
+# 修改真实姓名
+chfn -f root
 ```
 
 ## users
