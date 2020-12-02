@@ -461,6 +461,10 @@ echo $say
 
 # 也可以将内容输出到指定文件
 echo Hello World > 1.txt
+
+# -e 解析字符, 比如让字体输出颜色
+echo -e "\033[1;32m绿色\033[0m"
+echo -e "\n换行\n" # 解析 \n 作为换行
 ```
 
 
@@ -965,8 +969,11 @@ zip -r temp.zip temp
 # 包含系统隐藏文件
 zip -r -S temp.zip temp
 
-# 指定压缩效率 1-9
+# 指定归档效率 1-9
 zip -r -9 temp.zip temp 
+
+# -j 消除文件夹, 这样解压后只有 README.md 文件而不是带有 src 文件夹
+zip -j temp.zip src/README.md
 ```
 
 ## unzip
@@ -1117,7 +1124,7 @@ curl https://github.com/cosyer/linux-learning
 curl https://github.com/cosyer/linux-learning -O
 curl https://github.com/cosyer/linux-learning -O --progress # 显示下载进度条
 
-# -I 或 -head 显示HTTP响应报文
+# -I 或 --head 显示HTTP响应报文
 curl https://github.com/cosyer/linux-learning -I
 
 # -H 设置请求头
@@ -1134,6 +1141,10 @@ curl https://github.com/cosyer/linux-learning -v
 
 # -F(--form) 利用POST上传文件, file 是字段名, =@ 必须存在
 curl https://example.com/upload -F "file=@/home/demo.png"
+
+
+# --retry 请求重试 请求失败时设置重试次数
+curl http://example.com --retry 3
 ```
 
 ## date
