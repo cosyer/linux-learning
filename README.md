@@ -32,7 +32,9 @@
   - [tree](#tree)
   - [ln](#ln)
   - [file](#file)
+  - [sort](#sort)
   - [uniq](#uniq)
+  - [split](#split)
 - 系统管理
   - [top](#top)
   - [nohup](#nohup)
@@ -1855,6 +1857,24 @@ file README.md
 file index.html
 ```
 
+## sort
+将文本内容以行为单位进行排序。
+| 参数    | 描述              |
+| ------ |------------------ |
+| -c     | 检查文件是否已排序，若已经排序则什么都不输出     |
+| -r     | 以倒序来排序     |
+| -b     | 忽略每行开头的空格     |
+| -o     | 将排序结果输出到文件     |
+| -u     | 排序并去重，每行都是唯一的     |
+| -n     | 按照数值大小排序     |
+
+```bash
+# 排序并打印到终端
+sort README.md
+# 排序并去重将结果输出到 u.md 文件，可以用来替代 uniq 命令
+sort -u README.md -o u.md
+```
+
 ## uniq
 `uniq` 命令用于检查或删除文件中重复出现的行内容。
 
@@ -1884,10 +1904,22 @@ uniq -d 1.txt
 222
 ```
 
-解决办法是配合使用 `sort` 命令, 原理是先排序为相邻再去重：
+解决办法是配合使用 `sort` 命令, 原理是先排序为相邻再去重(实际上只用 sort 命令就能解决)：
 
 ```bash
 sort 1.txt | uniq > 2.txt
+```
+
+## split
+将一个文件切割成数个文件, 对于大文件来说非常实用。
+
+```bash
+# 将 README.md 文件每10行分割成一个文件
+split -10 README.md
+# -b 按字节分割
+split -b 100000 README.md
+# 指定分割后的文件名前缀为 READ ，分割后会自动在文件名后随机加上编号
+split -b 100000 README.md READ
 ```
 
 ## jobs
