@@ -25,6 +25,7 @@
   - [rmdir](#rmdir)
   - [cp](#cp)
   - [cat](#cat)
+  - [nl](#nl)
   - [mv](#mv)
   - [locate](#locate)
   - [open](#open)
@@ -582,6 +583,25 @@ cat README.md README2.md  # 或者一次性显示多个文件
 
 # -n 指定显示行号
 cat -n README.md
+```
+
+## nl
+同样用来打印内容，与 `cat` 命令不同的是打印内容会自动加上行号, 但 `nl` 命令可以对行号做特别的定制，主要针对行号有特别高要求的用户。
+
+- -b: 指定行号指定的方式
+  - -b a 无论是否为空行一样列出行号 (等价 `cat -n`)
+  - -b t 空行不列出行号, 默认 (等价 `cat -b`)
+- -n: 列出行号表示的方法
+  - -n ln 行号在屏幕的最左方显示
+  - -n rn 行号在自己栏位的最右方显示，且不加 0
+  - -n rz 行号在自己栏位的最右方显示，且加 0
+
+```bash
+# 打印内容并输出行号, 除了空号
+# 等价于 cat -b README.md
+nl README.md
+# 空行同样打印行号
+nl -b a README.md
 ```
 
 ## mv
