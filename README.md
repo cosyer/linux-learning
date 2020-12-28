@@ -19,6 +19,7 @@
   - [paste](#paste)
   - [stat](#stat)
   - [grep](#grep)
+  - [sed](#sed)
   - [touch](#touch)
   - [cd](#cd)
   - [rm](#rm)
@@ -1711,6 +1712,165 @@ grep -r "linux" ./src
 
 # 使用正则表达式搜索, 正则表达式语法与大部分编程语言基本上一致
 egrep "[0-9]" # 等价于 grep -E "[0-9]" README.md
+```
+
+## sed
+sed(stream editor) 是一种流编辑器，它一次处理一行内容。处理时，把当前处理的行存储在临时缓冲区中，称为“模式空间”，接着用 sed 命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。
+
+`sed` 主要用来自动编辑一个或多个文件、简化对文件的反复操作、编写转换程序等。
+
+命令格式：`sed options script file...`
+
+
+**选项**
+| 参数         | 描述              |
+| ----------- |------------------ |
+| -e script   | 在处理输入时，将script中指定的命令添加到已有的命令中     |
+| -f file     | 在处理输入时，将file中指定的命令添加到已有的命令中     |
+| -n          | 不产生命令输入，使用print命令来完成输出     |
+| -i          | 直接编辑文件并保存     |
+| -i.bak      | 备份文件并编辑保存     |
+
+
+来个简单的例子：
+```bash
+$ cat test.txt
+i like apple
+i like apple
+i like apple
+i like apple
+$ sed 's/apple/banana/' test.txt
+i like banana
+i like banana
+i like banana
+i like banana
+```
+
+运行上面例子结果就会马上显示出来。
+
+命令解释: sed 's/要替换的内容/替换后的内容/' 文件名, s(substitute)替代
+
+
+#### 执行多个命令
+如果需要执行多个命令时只要指定 `-e` 选项就可以了:
+```bash
+# 多个命令使用分号分隔
+$ sed 's/apple/banana/; s/i/I/' test.txt
+I like banana
+I like banana
+I like banana
+I like banana
+```
+
+
+#### 从文件中读取编辑器命令
+当需要执行大量命令时使用 `-e` 选项就有点鸡助了, 这时候可以将命令存储在一个单独文件中，然后在执行时指定 `-f` 选项读取。
+
+```bash
+$ cat cmd.sed
+s/apple/banana/
+s/i/I/
+# 执行
+$ sed -f cmd.sed test.txt
+```
+
+
+
+#### 直接编辑
+在执行 `sed` 时指定 `-i` 选项可以直接编辑文件并保存。
+
+```bash
+$ sed -i 's/apple/banana/' test.txt
+```
+
+如果是在 `mac` 上运行会报错：
+
+那是因为 mac 强制要求备份
+```bash
+sed: 1: "test.txt": undefined label '.txt'
+```
+
+```bash
+# 指定备份后缀 .bak 执行后将生成一个 test.txt.bak 文件
+sed -i '.bak' 's/apple/banana/' test.txt
+# 或者指定 -i.bak 选项, 会默认保存备份文件, 不需要指定备份后缀
+sed -i.bak 's/apple/banana/' test.txt
+```
+
+
+
+#### 替换标记
+s命令最后有一个可选的 flags `s/pattern/replacement/flags`, 有4种可用的标记：
+- 数字(大于0)，表明新文本将替换第几处模式匹配的地方
+- g, 全局匹配, 表示会替换所有匹配的文本
+- p, 表明原先的内容要先打印出来
+- w file, 将替换的结果写入到文件中
+
+**1、数字**:
+
+表明只替换每行中第二次出现的匹配模式。
+```bash
+$ cat test.txt
+i like apple apple
+i like apple apple
+$ sed 's/apple/banana/2' test.txt
+i like banana apple
+i like banana apple
+```
+
+**2、g**:
+
+在替换时如果不带 `g` 标记只会替换每行中第一次出现匹配模式。
+```bash
+$ cat test.txt
+i like apple apple
+i like apple apple
+# 没有带 g 标记
+$ sed 's/apple/banana/' test.txt
+i like banana apple
+i like banana apple
+# 带 g 标记
+$ sed 's/apple/banana/g' test.txt
+i like banana banana
+i like banana banana
+```
+
+**3、p**:
+p 替换标记会打印与替换命令中指定的模式匹配的行，通常会与 `-n` 选项一起使用才能发挥更好的作用。
+
+-n 选项会禁止 `sed` 编辑器输出，但p替换标记会输出修改过的行，将两者配合使用的效果就是只输出被替换命令修改过的行。
+
+```bash
+$ cat test.txt
+i like apple apple
+i like apple apple
+$ sed -n 's/apple/banana/p' test.txt
+i like banana apple
+i like banana apple
+```
+
+
+**4、w**:
+
+将命令替换的结果写入到文件中
+```bash
+$ sed 's/apple/banana/w 1.txt' test.txt
+```
+
+
+#### 替换反斜杠
+当遇到需要匹配反斜杠 `/` 时就很麻烦了，需要做转义：
+
+```bash
+# 将 /bin/sh 替换为 /bin/bash
+$ sed 's/\/bin\/sh/\/bin\/bash/' test.txt
+```
+
+如果有大量这种反斜杠可读性就变差了， 还好 sed 提供了感叹号作为字符串分隔符：
+
+```bash
+# 感叹号是一个占位符, 代表的是 / 反斜杠
+$ sed 's!/bin/sh!/bin/bash!' test.txt
 ```
 
 ## systemctl
