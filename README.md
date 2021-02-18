@@ -48,6 +48,7 @@
   - [ps](#ps)
   - [uptime](#uptime)
   - [crontab](#crontab)
+  - [at](#at)
   - [uname](#uname)
   - [ifconfig](#ifconfig)
   - [whereis](#whereis)
@@ -209,7 +210,7 @@ ls -a
 
 
 ## pwd
-显示当前工作目录
+显示当前工作目录(Print Working Directory)
 ```bash
 # 没有太多有用的参数，用法很简单
 pwd
@@ -367,7 +368,7 @@ find . -path "*.js" ! -path "*node_modules*" ! -path "*test*" ! -path "*dist*" |
 ```
 
 ## mkdir
-创建目录
+创建目录(make directory)
 ```bash
 # 在当前目录下创建 temp 目录
 mkdir temp
@@ -1388,6 +1389,54 @@ crontab -r
 # 这里 if 语句检查明天的日期是不是01，如果是今天就是最后一天
 # 每天中午12点检查今天是不是最后一天
 00 12 * * * if [ `date +%d -d tomorrow` = 01 ] ; then ; 要执行的命令
+```
+
+## at
+在指定时间执行指令，`at` 命令时间参数相当复杂，只需要了解常用即可。
+| 参数   | 描述              |
+| ----- |----------------- |
+| -d    | 删除已经设定的任务, atrm 别名 |
+| -v    | 显示任务将被执行的时间 |
+| -c    | 打印任务的内容到标准输出 |
+| -f    | 指定文件读取任务 |
+设定任务, 执行后进入交互输入要执行的指令, 按 `Ctrl+D` 完成并退出。
+```bash
+# 三天后的下午 5点
+$ at 5pm+3 days
+# 明天上午 11点11分
+$ at 11:11 tomorrow
+# 今天上午 11点11分
+$ at 11:11
+# 当前时间之后1分钟
+# year 年
+# month 月
+# day 日
+# hours 小时
+# minutes 分钟
+$ at now +1 minutes
+# 也可以通过管道执行，免去交互
+echo "ls" | at 11:11
+```
+指定文件运行脚本
+```bash
+at 11:11 -f /opt/script.sh
+```
+查看当前任务队列
+```bash
+$ atq
+2       Sat Jan 30 11:46:00 2021 a root
+```
+查看指定任务内容
+```bash
+# 2为编号
+$ at -c 2
+```
+删除已经设定的任务
+```bash
+# 1 是编号, 通过 atq 查看
+$ at -d 1
+# 等价
+$ atrm 1
 ```
 
 ## man
