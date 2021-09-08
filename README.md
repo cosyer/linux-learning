@@ -2361,6 +2361,13 @@ users
 # cosyer
 # root
 # admin
+
+## 查看全局日志
+cat /var/log/messages
+## pure-ftpd oneinstack
+./usr/local/pureftpd/bin/pure-pw list
+pkill pure-ftpd
+service pureftpd start
 ```
 
 [回目录](#目录)
